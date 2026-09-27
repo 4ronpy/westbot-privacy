@@ -19,8 +19,6 @@
 | **Privacy Policy** | [PRIVACY.md](PRIVACY.md) | [PRIVACY-ES.md](PRIVACY-ES.md) |
 | **Terms of Service** | [TERMS.md](TERMS.md) | [TERMS-ES.md](TERMS-ES.md) |
 
-> These links are what you paste into the **Discord Developer Portal** under
-> `Settings → General Information`.
 
 ---
 
