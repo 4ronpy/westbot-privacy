@@ -22,19 +22,6 @@
 
 ---
 
-## 🔗 Developer Portal URLs
-
-Paste these into the [Discord Developer Portal](https://discord.com/developers/applications):
-
-| Portal field | Value |
-| --- | --- |
-| **Privacy Policy URL** | `https://github.com/4ronpy/westbot-privacy/blob/main/PRIVACY.md` |
-| **Terms of Service URL** | `https://github.com/4ronpy/westbot-privacy/blob/main/TERMS.md` |
-| Interactions Endpoint URL | _leave empty — the bot uses Gateway_ |
-| Linked Roles Verification URL | _leave empty — Linked Roles is not used_ |
-
----
-
 ## 📋 Summary / Resumen
 
 <table>
