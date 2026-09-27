@@ -45,7 +45,9 @@ WestBot does **not** read, store, or analyze the content of ordinary conversatio
 
 ## Member data
 
-WestBot requests the **Server Members Intent** to receive join, leave, and ban events for servers that enable the corresponding welcome, leave-notification, and ban-log features. It uses these events only to post the notification embed for that server's configured channel. It does not enumerate, download, or maintain a copy of a server's full member list. Where WestBot needs to look up a user by name, it uses Discord's own non-restricted search endpoint, and it reads the result only to display it in the resulting message.
+WestBot requests the **Server Members Intent** for a single purpose: receiving the ban event so that a server's log channel can record who was banned, when, and the reason given. Discord delivers this only to applications holding the intent.
+
+WestBot does **not** use this intent to send join or leave notifications, to enumerate or store a member list, or for any form of profiling. Member data received in a ban event is used only to render that log entry and is not stored separately. Where WestBot needs to look up a user by name, it uses Discord's own non-restricted search endpoint, and reads the result only to display it in the resulting message. Where it needs a member total, it uses the count included in the guild payload.
 
 WestBot does **not** request the **Presence Intent**. It never reads users' online status, custom status, or playing activity.
 
@@ -72,9 +74,28 @@ WestBot does not send user data to any analytics, advertising, or tracking servi
 - On request from a user, we will delete the data associated with that user's Discord user ID. On request from a server owner, we will delete that server's configuration and logs.
 - Data is removed from the live database within a reasonable period of a verified request. Residual copies may persist in backups for a short additional window before being rotated out.
 
+### Retention periods
+
+Not all data is short-lived. The following periods apply:
+
+| Data | Retention |
+| --- | --- |
+| AFK status | Until you next send a message, then deleted immediately |
+| Pre-ban warnings | 5 days, then expire automatically |
+| Moderator activity log (command, target user, reason text taken from a message) | Kept for as long as the server uses the staff feature, as it exists to let server owners review moderator behaviour |
+| Moderation cases and appeals | Kept for as long as the server uses the moderation feature, as they are the server's accountability record |
+| Ticket metadata (counts, participants, timestamps) | Kept for as long as the server uses the ticket feature; no message text is stored |
+| Opt-in social state (relationships, interaction counters) | Until you or a server moderator remove it |
+| Spotify tokens | Until you revoke access in Spotify or request deletion |
+| Server configuration | Until the server owner removes the feature or the bot |
+
+Text derived from message content is retained only in the moderator activity log described above, which is accessible solely to the server's administrators and can be deleted by them or by the server owner at any time.
+
+Moderation case and appeal records are intentionally retained longer than 30 days because their purpose is server accountability: a short retention window would defeat the ability to review staff conduct. These records are accessible only to that server's administrators, and a server owner or moderator can delete them at any time.
+
 ## Security
 
-Discord tokens and database credentials are stored only as environment variables on the hosting platform and are never committed to the source repository. The application is served over HTTPS, and database connections require TLS. Access to production data is limited to the bot maintainers.
+Discord tokens and database credentials are stored only as environment variables on the hosting platform and are never committed to the source repository. The application is served over HTTPS, and database connections require TLS (`sslmode=require`). The database is hosted on Heroku Postgres, which encrypts all data at rest with AES-256 block-level storage encryption on every plan tier, and stores physical backups encrypted as well. Access to production data is limited to the bot maintainers.
 
 ## Children
 
@@ -82,7 +103,7 @@ WestBot is not directed at children under 13 and is not intended for use by them
 
 ## Changes to this policy
 
-If this policy changes materially, the updated version will be committed to the public source repository linked above, and the "Last updated" date at the top will be revised. Continued use of WestBot after a change constitutes acceptance of the updated policy.
+If this policy changes materially, the updated version will be published at the same public URL, and the "Last updated" date at the top will be revised. Continued use of WestBot after a change constitutes acceptance of the updated policy.
 
 ## Source code
 
